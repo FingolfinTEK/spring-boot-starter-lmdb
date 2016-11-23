@@ -1,5 +1,6 @@
 package com.fingolfintek.lmdb;
 
+import com.esotericsoftware.kryo.Kryo;
 import com.fingolfintek.lmdb.tx.LMDBTransactionManager;
 import javaslang.control.Try;
 import org.fusesource.lmdbjni.Env;
@@ -33,6 +34,7 @@ public class LMDBAutoConfiguration {
     }
     
     @Bean
+    @ConditionalOnClass(Kryo.class)
     @ConditionalOnMissingBean(LMDBCodec.class)
     public LMDBCodec lmdbCodec() {
         return new KryoLMDBCodec();
@@ -41,7 +43,7 @@ public class LMDBAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(KeyGenerator.class)
     public KeyGenerator keyGenerator() {
-        return new KeyGenerator();
+        return new SimpleKeyGenerator();
     }
 
     @Bean

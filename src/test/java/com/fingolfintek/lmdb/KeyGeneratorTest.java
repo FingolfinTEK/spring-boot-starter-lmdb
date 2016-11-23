@@ -26,7 +26,7 @@ public class KeyGeneratorTest {
 
     @Test
     public void generateUniqueKey() throws Exception {
-        KeyGenerator generator = new KeyGenerator();
+        SimpleKeyGenerator generator = new SimpleKeyGenerator();
         assertThat(generator.generateUniqueKey())
                 .isEqualToComparingFieldByFieldRecursively(Key.from(1, 1));
         assertThat(generator.generateUniqueKey())
@@ -35,7 +35,7 @@ public class KeyGeneratorTest {
 
     @Test
     public void generateUniqueRawKey() throws Exception {
-        KeyGenerator generator = new KeyGenerator();
+        SimpleKeyGenerator generator = new SimpleKeyGenerator();
         assertThat(generator.generateUniqueRawKey())
                 .containsExactly(bytes(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1));
         assertThat(generator.generateUniqueRawKey())
