@@ -1,0 +1,18 @@
+machine:
+  java:
+    version: oraclejdk8
+test:
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \
+    - mvn package
+    - cp target/*.jar $CIRCLE_ARTIFACTS
+deployment:
+  staging:
+    branch: master
+    commands:
+      # Fetch github-release
+      - go get github.com/aktau/github-release
+      # Upload release to GitHub
+      - github-release release --user $CIRCLE_PROJECT_USERNAME --repo $CIRCLE_PROJECT_REPONAME --tag $TAG --name "$CIRCLE_PROJECT_REPONAME-$TAG.jar"
+      - github-release upload --user $CIRCLE_PROJECT_USERNAME --repo $CIRCLE_PROJECT_REPONAME --tag $TAG --file /home/ubuntu/$CIRCLE_PROJECT_REPONAME/build/libs/$CIRCLE_PROJECT_REPONAME.jar --name "$CIRCLE_PROJECT_REPONAME-$TAG.jar"
