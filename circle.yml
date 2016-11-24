@@ -15,4 +15,4 @@ deployment:
       - go get github.com/aktau/github-release
       # Upload release to GitHub
       - github-release release --user $CIRCLE_PROJECT_USERNAME --repo $CIRCLE_PROJECT_REPONAME --tag $TAG --name "$CIRCLE_PROJECT_REPONAME-$TAG.jar"
-      - github-release upload --user $CIRCLE_PROJECT_USERNAME --repo $CIRCLE_PROJECT_REPONAME --tag $TAG --file /home/ubuntu/$CIRCLE_PROJECT_REPONAME/build/libs/$CIRCLE_PROJECT_REPONAME.jar --name "$CIRCLE_PROJECT_REPONAME-$TAG.jar"
+      - github-release upload --user $CIRCLE_PROJECT_USERNAME --repo $CIRCLE_PROJECT_REPONAME --tag $TAG --file $CIRCLE_ARTIFACTS/$CIRCLE_PROJECT_REPONAME-0.0.1.jar --name "$CIRCLE_PROJECT_REPONAME-$TAG.jar"
